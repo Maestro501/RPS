@@ -14,7 +14,7 @@ $( "#refresh" ).submit(function( event ) {
 
 var newRef = myRootRef.push();
 
-newRef.push('hello');
+//newRef.push('hello');
 
 myRootRef.on('child_added', function(snapshot) {
   var message = snapshot.val();
