@@ -12,15 +12,15 @@ var obj = {
 
 
 var populate = function(obj){
-console.log(obj);
-  var result = ['win', 'lose'];
-  var hand = ['rock', 'scissors', 'paper'];
 
-  for (var i = 0; i < result.length; i++) {
-    for (var k = 0; k < hand.length; i++) {
-      obj[ result[i] ][ hand[k] ] = [ obj ]
-    };
-  };
+  // var result = ['win', 'lose'];
+  // var hand = ['rock', 'scissors', 'paper'];
+
+  // for (var i = 0; i < result.length; i++) {
+  //   for (var k = 0; k < hand.length; i++) {
+  //     obj[ result[i] ][ hand[k] ] = [ obj ]
+  //   };
+  // };
 
   obj['win']['rock'] = [ obj['win']['stats'][1] / obj['win']['stats'][0] ];
   obj['win']['scissors'] = [ obj['win']['stats'][2] / obj['win']['stats'][0] ];
@@ -28,15 +28,15 @@ console.log(obj);
   obj['lose']['rock'] = [ obj['lose']['stats'][1] / obj['lose']['stats'][0] ];
   obj['lose']['scissors'] = [ obj['lose']['stats'][2] / obj['lose']['stats'][0] ];
   obj['lose']['paper'] = [ obj['lose']['stats'][3] / obj['lose']['stats'][0] ];
-  console.log(obj);
 }
+
+var previous = false;
 
 var firstPlay = true;
 
 var attack = false;
 
 populate(obj);
-
 
 rootRef.set(obj)
 
@@ -48,12 +48,22 @@ mainApp.controller('myController', function($scope){
 
   var expect = function(obj){
     var decider = Math.random()
-    if( decider < obj['rock'] ){
-      expectedHand = 'rock';
-    }else if( decider < ( Number(obj['rock']) + Number(obj['scissors']) ) ){
-      expectedHand = 'scissors';
+    if(!previous){
+      if( decider < obj['win']['rock'] ){
+        expectedHand = 'rock';
+      }else if( decider < ( Number(obj['win']['rock']) + Number(obj['win']['scissors']) ) ){
+        expectedHand = 'scissors';
+      }else{
+        expectedHand = 'paper';
+      }
     }else{
-      expectedHand = 'paper';
+      if( decider < obj['lose']['rock'] ){
+        expectedHand = 'rock';
+      }else if( decider < ( Number(obj['lose']['rock']) + Number(obj['lose']['scissors']) ) ){
+        expectedHand = 'scissors';
+      }else{
+        expectedHand = 'paper';
+      }
     }
   }
 
@@ -88,28 +98,51 @@ mainApp.controller('myController', function($scope){
 
   $scope.match = function(player, computer){
     if(player === computer){
+      if(!previous){
 
-      if(player === 'rock'){
-        obj['stats'][0]++;
-        obj['stats'][1]++;
-        populate(obj);
-        rootRef.set(obj);
-      }else if(player === 'scissors'){
-        obj['stats'][0]++;
-        obj['stats'][2]++;
-        populate(obj);
-        rootRef.set(obj);
+        if(player === 'rock'){
+          obj['win']['stats'][0]++;
+          obj['win']['stats'][1]++;
+          populate(obj);
+          rootRef.set(obj);
+        }else if(player === 'scissors'){
+          obj['win']['stats'][0]++;
+          obj['win']['stats'][2]++;
+          populate(obj);
+          rootRef.set(obj);
+        }else{
+          obj['win']['stats'][0]++;
+          obj['win']['stats'][3]++;
+          populate(obj);
+          rootRef.set(obj);
+        }
+
       }else{
-        obj['stats'][0]++;
-        obj['stats'][3]++;
-        populate(obj);
-        rootRef.set(obj);
+
+        if(player === 'rock'){
+          obj['lose']['stats'][0]++;
+          obj['lose']['stats'][1]++;
+          populate(obj);
+          rootRef.set(obj);
+        }else if(player === 'scissors'){
+          obj['lose']['stats'][0]++;
+          obj['lose']['stats'][2]++;
+          populate(obj);
+          rootRef.set(obj);
+        }else{
+          obj['lose']['stats'][0]++;
+          obj['lose']['stats'][3]++;
+          populate(obj);
+          rootRef.set(obj);
+        }
+
       }
 
       if( $scope.attacker === "computer's attack!" ){
         alert('YOU LOSE!');
         attack = false;
         firstPlay = true;
+        previous = false;
         $scope.streak = 0;
         $scope.playerHand = '';
         $scope.computerHand = '';
@@ -118,59 +151,121 @@ mainApp.controller('myController', function($scope){
         alert('YOU WIN!');
         attack = false;
         firstPlay = true;
+        previous = false;
         $scope.streak++;
         $scope.playerHand = '';
         $scope.computerHand = '';
         $scope.attacker = '';
       } else {
         $scope.attacker = 'draw!';
+        previous = false;
       }
 
-    }else{
-      if(player === 'rock'){
-        obj['stats'][0]++;
-        obj['stats'][1]++;
+    }else{           //not a draw
+
+      if(!previous){
+        if(player === 'rock'){
+        obj['win']['stats'][0]++;
+        obj['win']['stats'][1]++;
         populate(obj);
         rootRef.set(obj);
 
         if (computer === 'paper'){
           $scope.attacker = "computer's attack!";
+          previous = true;
           attack = true;
           firstPlay = false;
         }else{
           $scope.attacker = "Your attack!";
+          previous = false;
           attack = false;
           firstPlay = false;
         }
 
-      }else if(player === 'scissors'){
-        obj['stats'][0]++;
-        obj['stats'][2]++;
+        }else if(player === 'scissors'){
+          obj['win']['stats'][0]++;
+          obj['win']['stats'][2]++;
 
-        if ( computer === 'rock' ){
-          $scope.attacker = "computer's attack!";
-          attack = true;
-          firstPlay = false;
+          if ( computer === 'rock' ){
+            $scope.attacker = "computer's attack!";
+            previous = true;
+            attack = true;
+            firstPlay = false;
+          }else{
+            $scope.attacker = "Your attack!";
+            previous = false;
+            attack = false;
+            firstPlay = false;
+          }
+
         }else{
-          $scope.attacker = "Your attack!";
-          attack = false;
-          firstPlay = false;
-        }
+          obj['win']['stats'][0]++;
+          obj['win']['stats'][2]++;
 
+          if ( computer === 'scissors' ){
+            $scope.attacker = "computer's attack!";
+            previous = true;
+            attack = true;
+            firstPlay = false;
+          }else{
+            $scope.attacker = "Your attack!";
+            attack = false;
+            previous = false;
+            firstPlay = false;
+          }
+
+        }
       }else{
-        obj['stats'][0]++;
-        obj['stats'][2]++;
+        if(player === 'rock'){
+          obj['lose']['stats'][0]++;
+          obj['lose']['stats'][1]++;
+          populate(obj);
+          rootRef.set(obj);
 
-        if ( computer === 'scissors' ){
-          $scope.attacker = "computer's attack!";
-          attack = true;
-          firstPlay = false;
+          if(computer === 'paper'){
+            $scope.attacker = "computer's attack!";
+            attack = true;
+            previous = true;
+            firstPlay = false;
+          }else{
+            $scope.attacker = "Your attack!";
+            previous = false;
+            attack = false;
+            firstPlay = false;
+          }
+
+        }else if(player === 'scissors'){
+          obj['lose']['stats'][0]++;
+          obj['lose']['stats'][2]++;
+
+          if ( computer === 'rock' ){
+            $scope.attacker = "computer's attack!";
+            previous = true;
+            attack = true;
+            firstPlay = false;
+          }else{
+            $scope.attacker = "Your attack!";
+            previous = false;
+            attack = false;
+            firstPlay = false;
+          }
+
         }else{
-          $scope.attacker = "Your attack!";
-          attack = false;
-          firstPlay = false;
-        }
+          obj['lose']['stats'][0]++;
+          obj['lose']['stats'][2]++;
 
+          if ( computer === 'scissors' ){
+            $scope.attacker = "computer's attack!";
+            previous = true;
+            attack = true;
+            firstPlay = false;
+          }else{
+            $scope.attacker = "Your attack!";
+            previous = false;
+            attack = false;
+            firstPlay = false;
+          }
+        }
       }
     }
   }
