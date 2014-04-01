@@ -1,4 +1,4 @@
-var mainApp = angular.module('mainApp', []);
+var mainApp = angular.module('mainApp', ['ngRoute']);
 var rootRef = new Firebase('https://sizzling-fire-704.firebaseio.com/');
 
 var obj = {
@@ -28,7 +28,7 @@ var populate = function(obj){
   obj['lose']['rock'] = [ obj['lose']['stats'][1] / obj['lose']['stats'][0] ];
   obj['lose']['scissors'] = [ obj['lose']['stats'][2] / obj['lose']['stats'][0] ];
   obj['lose']['paper'] = [ obj['lose']['stats'][3] / obj['lose']['stats'][0] ];
-}
+};
 
 var previous = false;
 
@@ -38,9 +38,13 @@ var attack = false;
 
 populate(obj);
 
-rootRef.set(obj)
+rootRef.set(obj);
 
-mainApp.controller('myController', function($scope){
+mainApp.controller('mainController', function($scope, $route, $routeParams, $location){
+  
+  $scope.$route = $route;
+  $scopee.$location = $location;
+  $scope.routeParams = $routeParams;
 
   var hand = ['rock', 'scissors', 'paper'];
 
@@ -65,7 +69,7 @@ mainApp.controller('myController', function($scope){
         expectedHand = 'paper';
       }
     }
-  }
+  };
 
 
   $scope.computerHand;
@@ -274,5 +278,11 @@ mainApp.controller('myController', function($scope){
     expect(obj);
     $scope.computer();
     $scope.playerHand = hand[n];
-  }
+  };
+});
+
+mainApp.controller('LoginController', function($scope, $routeParams){
+  $scope.name = 'LoginController'
 })
+
+
