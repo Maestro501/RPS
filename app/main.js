@@ -1,12 +1,34 @@
 var mainApp = angular.module('mainApp', []);
 var rootRef = new Firebase('https://sizzling-fire-704.firebaseio.com/');
 
-var obj = { 'stats': [3, 1, 1, 1] };
+var obj = {
+  'win': {
+    'stats': [3, 1, 1, 1]
+  },
+  'lose': {
+    'stats': [3, 1, 1, 1]
+  }
+};
+
 
 var populate = function(obj){
-  obj['rock'] = [ obj['stats'][1] / obj['stats'][0], { 'stats': [3, 1, 1, 1] } ];
-  obj['scissors'] = [ obj['stats'][2] / obj['stats'][0], { 'stats': [3, 1, 1, 1] } ];
-  obj['paper'] = [ obj['stats'][3] / obj['stats'][0], { 'stats': [3, 1, 1, 1] } ];
+console.log(obj);
+  var result = ['win', 'lose'];
+  var hand = ['rock', 'scissors', 'paper'];
+
+  for (var i = 0; i < result.length; i++) {
+    for (var k = 0; k < hand.length; i++) {
+      obj[ result[i] ][ hand[k] ] = [ obj ]
+    };
+  };
+
+  obj['win']['rock'] = [ obj['win']['stats'][1] / obj['win']['stats'][0] ];
+  obj['win']['scissors'] = [ obj['win']['stats'][2] / obj['win']['stats'][0] ];
+  obj['win']['paper'] = [ obj['win']['stats'][3] / obj['win']['stats'][0] ];
+  obj['lose']['rock'] = [ obj['lose']['stats'][1] / obj['lose']['stats'][0] ];
+  obj['lose']['scissors'] = [ obj['lose']['stats'][2] / obj['lose']['stats'][0] ];
+  obj['lose']['paper'] = [ obj['lose']['stats'][3] / obj['lose']['stats'][0] ];
+  console.log(obj);
 }
 
 var firstPlay = true;
@@ -15,11 +37,6 @@ var attack = false;
 
 populate(obj);
 
-console.log(obj['rock']);
-
-populate( obj['rock'][1] );
-populate(obj['scissors'][1]);
-populate(obj['paper'][1]);
 
 rootRef.set(obj)
 
@@ -31,15 +48,11 @@ mainApp.controller('myController', function($scope){
 
   var expect = function(obj){
     var decider = Math.random()
-    console.log(decider);
-    console.log(obj);
     if( decider < obj['rock'] ){
       expectedHand = 'rock';
     }else if( decider < ( Number(obj['rock']) + Number(obj['scissors']) ) ){
-      console.log('should be scissors')
       expectedHand = 'scissors';
     }else{
-      console.log(obj['rock'] + obj['scissors'])
       expectedHand = 'paper';
     }
   }
@@ -54,8 +67,6 @@ mainApp.controller('myController', function($scope){
   $scope.streak = 0;
 
   $scope.computer = function(){
-      console.log(expectedHand);
-      console.log(attack);
     if(attack){
       if( expectedHand === 'rock' ){
         $scope.computerHand = 'rock';
