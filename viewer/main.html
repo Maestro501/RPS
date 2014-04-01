@@ -1,12 +1,9 @@
-
-  <body ng-app='mainApp'>
-    <div ng-controller='myController'>
-      <button ng-click='player(0); match(playerHand, computerHand)'>rock</button>
-      <button ng-click='player(1); match(playerHand, computerHand)'>scissors</button>
-      <button ng-click='player(2); match(playerHand, computerHand)'>paper</button>
-      <h1>player: {{playerHand}}</h1>
-      <h1>computer: {{computerHand}}</h1>
-      <h1>{{attacker}}</h1>
-      <h2>streak: {{streak}}</h2>
-    </div>
-  </body>
+<div ng-controller='mainController'>
+  <button ng-click='player(0); match(playerHand, computerHand)'>rock</button>
+  <button ng-click='player(1); match(playerHand, computerHand)'>scissors</button>
+  <button ng-click='player(2); match(playerHand, computerHand)'>paper</button>
+  <h1>player: {{playerHand}}</h1>
+  <h1>computer: {{computerHand}}</h1>
+  <h1>{{attacker}}</h1>
+  <h2>streak: {{streak}}</h2>
+</div>

@@ -7,16 +7,26 @@
     <!-- // <script src='https://cdn.firebase.com/js/simple-login/1.3.0/firebase-simple-login.js'></script> -->
   </head>
 
-  <body>
-    <div id='messagesDiv'></div>
-      <input type='text' id='nameInput' placeholder='Name'>
-      <input type='text' id='messageInput' placeholder='Message'>
-    <form id='refresh'>
-      <input type='submit' value="Refresh">
-    </form>
-  </body>
+  <body ng-app='mainApp'>
 
-  <div ng-view></div>
+
+    <body>
+      <div id='messagesDiv'></div>
+        <input type='text' id='nameInput' placeholder='Name'>
+        <input type='text' id='messageInput' placeholder='Message'>
+      <form id='refresh'>
+        <input type='submit' value="Refresh">
+      </form>
+    </body>
+
+        Choose:
+      <a href="index.html/Index">Main Page</a> |
+
+
+
+    <div ng-view></div>
+
+  </body>
 
     <script src='../app/main.js'></script>
     <script src='../server/firebase.js'></script>
