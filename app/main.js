@@ -1,4 +1,18 @@
 var mainApp = angular.module('mainApp', []);
+var rootRef = new Firebase('https://sizzling-fire-704.firebaseio.com/');
+
+var obj = {};
+obj['stats'] = [3, 1, 1, 1];
+
+var populate = function(obj){
+  obj['rock'] = [ obj['stats'][1] / obj['stats'][0] ];
+  obj['scissors'] = [ obj['stats'][2] / obj['stats'][0] ];
+  obj['paper'] = [ obj['stats'][3] / obj['stats'][0] ];
+}
+
+populate(obj);
+
+rootRef.push(obj)
 
 mainApp.controller('myController', function($scope){
 
@@ -41,18 +55,26 @@ mainApp.controller('myController', function($scope){
       }
     }else{
       if(player === 'rock'){
+        obj['stats'][0]++;
+        obj['stats'][1]++;
+        populate(obj);
+        rootRef.set(obj);
         if (computer === 'paper'){
           $scope.attacker = "computer's attack!";
         }else{
           $scope.attacker = "Your attack!";
         }
       }else if(player === 'scissors'){
+        obj['stats'][0]++;
+        obj['stats'][2]++;
         if ( computer === 'rock' ){
           $scope.attacker = "computer's attack!";
         }else{
           $scope.attacker = "Your attack!";
         }
       }else{
+        obj['stats'][0]++;
+        obj['stats'][2]++;
         if ( computer === 'scissors' ){
           $scope.attacker = "computer's attack!";
         }else{

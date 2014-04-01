@@ -9,8 +9,12 @@ $('#messageInput').keypress(function (e) {
 });
 
 $( "#refresh" ).submit(function( event ) {
-  myRootRef.remove();
+  myRootRef.set(null);
 });
+
+var newRef = myRootRef.push();
+
+newRef.push('hello');
 
 myRootRef.on('child_added', function(snapshot) {
   var message = snapshot.val();
