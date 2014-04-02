@@ -29,9 +29,19 @@
       <h2>stats : {{stats}} </h2>
       <h2>prediction accuracy : {{accuracy}}</h2>
       <h2>streak : {{streak}}</h2>
-      <button ng-click='player(0); match(playerHand, computerHand)'>rock</button>
-      <button ng-click='player(1); match(playerHand, computerHand)'>scissors</button>
-      <button ng-click='player(2); match(playerHand, computerHand)'>paper</button>
+      
+      <button id='plays' ng-click='player(0); match(playerHand, computerHand)'>
+        <img src='style/rock.png'/>
+      </button>
+      
+      <button id='plays' ng-click='player(1); match(playerHand, computerHand)'>
+        <img src='style/scissors.png'/>
+      </button>
+      
+      <button id='plays' ng-click='player(2); match(playerHand, computerHand)'>
+        <img src='style/paper.png'/>
+      </button>
+      
       <div>
         <button ng-click='paper(100)'>play paper 100 times</button>
       </div>
@@ -47,3 +57,4 @@
 
 
 </html>
+

@@ -1,3 +1,25 @@
+#plays {
+  background-color: white;
+  position: relative;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  border: 0px solid #18ab29;
+  display:inline-block;
+  cursor:pointer;
+  padding:16px 31px;
+  z-index: 1;
+}
+
+#plays:hover {
+  background: url('../style/areyousure.png') !important;
+  background-position: 0 0;
+}
+
+#plays:hover img {
+  opacity: 0;
+}
+
 /*-- Chart --*/
 #chart {
     width: 700;
