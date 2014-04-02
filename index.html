@@ -24,11 +24,27 @@
 
   <body ng-app='mainApp'>
     <div ng-controller='mainController'>
-      <h1>player: {{playerHand}}</h1>
-      <h1>computer: {{computerHand}}</h1>
+
+      <div ng-show="idiot">
+        <img src='style/ugc.jpeg'/>
+      </div>
+      <div ng-show="idiot">
+        <img class='textbubble' src='style/textBubble.png'/>
+      </div>
+
+      <div ng-show="computerRock">
+        <img src='style/rock.png'/>
+      </div>
+      <div ng-show="computerScissors">
+        <img src='style/scissors.png'/>
+      </div>
+      <div ng-show="computerPaper">
+        <img src='style/paper.png'/>
+      </div>
       <h2>stats : {{stats}} </h2>
       <h2>prediction accuracy : {{accuracy}}</h2>
       <h2>streak : {{streak}}</h2>
+      
       
       <button id='plays' ng-click='player(0); match(playerHand, computerHand)'>
         <img src='style/rock.png'/>

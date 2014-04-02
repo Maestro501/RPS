@@ -11,6 +11,8 @@ var stats = {
 rootRef.set(stats);
 
 
+
+
 var playerData = ['player'];
 var computerData = ['computer'];
 //var predictionData = ['prediction'];
@@ -103,6 +105,12 @@ rootRef.push(obj);
 
 mainApp.controller('mainController', function($scope){
 
+  $scope.idiot = false;
+
+  $scope.computerRock = false;
+  $scope.computerScissors = false;
+  $scope.computerPaper = false;
+
   // $scope.$route = $route;
   // $scopee.$location = $location;
   // $scope.routeParams = $routeParams;
@@ -156,18 +164,38 @@ mainApp.controller('mainController', function($scope){
     if(attack){
       if( expectedHand === 'rock' ){
         $scope.computerHand = 'rock';
+        $scope.computerScissors = false;
+        $scope.computerPaper = false;
+        $scope.computerRock = true;
+
       }else if( expectedHand === 'scissors' ){
         $scope.computerHand = 'scissors';
+        $scope.computerPaper = false;
+        $scope.computerRock = false;
+        $scope.computerScissors = true;
       }else{
         $scope.computerHand = 'paper';
+        $scope.computerRock = false;
+        $scope.computerScissors = false;
+        $scope.computerPaper = true;
       }
     }else{
       if( expectedHand === 'rock' ){
         $scope.computerHand = 'paper';
+        $scope.computerRock = false;
+        $scope.computerScissors = false;
+        $scope.computerPaper = true;
       }else if( expectedHand === 'scissors' ){
         $scope.computerHand = 'rock';
+        $scope.computerScissors = false;
+        $scope.computerPaper = false;
+        $scope.computerRock = true;
+
       }else{
         $scope.computerHand = 'scissors';
+        $scope.computerRock = false;
+        $scope.computerPaper = false;
+        $scope.computerScissors = true;
       }
     }
   };
@@ -221,6 +249,12 @@ mainApp.controller('mainController', function($scope){
 
       if( $scope.attacker === "computer's attack!" ){
         $scope.attacker = "YOU LOST!";
+        if( ( stats.computer - stats.player ) > 20 ){
+          $scope.computerPaper = false;
+          $scope.computerRock = false;
+          $scope.computerScissors = false;
+          $scope.idiot = true;
+        }
         stats.computer++;
         $scope.stats = 'Player ' + stats.player + ' vs ' + stats.computer + ' Computer';
         rootRef.push(stats);
