@@ -1,0 +1,76 @@
+<html>
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="lib/c3.css">
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+    <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="lib/c3.min.js"></script>
+    <!-- // <script src='https://cdn.firebase.com/js/simple-login/1.3.0/firebase-simple-login.js'></script> -->
+
+  </head>
+
+
+<!--   <body>
+    <div id='messagesDiv'></div>
+      <input type='text' id='nameInput' placeholder='Name'>
+      <input type='text' id='messageInput' placeholder='Message'>
+    <form id='refresh'>
+      <input type='submit' value="Refresh">
+    </form>
+  </body> -->
+
+  <body ng-app='mainApp'>
+    <div ng-controller='mainController'>
+
+      <div ng-show="idiot">
+        <img src='style/mock.jpg'/>
+      </div>
+<!--       <div ng-show="idiot">
+        <img class='textbubble' src='style/textBubble.png'/>
+      </div> -->
+
+      <div ng-show="computerRock">
+        <img src='style/rock.png'/>
+      </div>
+      <div ng-show="computerScissors">
+        <img src='style/scissors.png'/>
+      </div>
+      <div ng-show="computerPaper">
+        <img src='style/paper.png'/>
+      </div>
+      <h2>stats : {{stats}} </h2>
+      <h2>prediction accuracy : {{accuracy}}</h2>
+      <h2>streak : {{streak}}</h2>
+      
+      
+      <button id='plays' ng-click='player(0); match(playerHand, computerHand)'>
+        <img src='style/rock.png'/>
+      </button>
+      
+      <button id='plays' ng-click='player(1); match(playerHand, computerHand)'>
+        <img src='style/scissors.png'/>
+      </button>
+      
+      <button id='plays' ng-click='player(2); match(playerHand, computerHand)'>
+        <img src='style/paper.png'/>
+      </button>
+      
+      <div>
+        <button ng-click='paper(100)'>play paper 100 times</button>
+      </div>
+      <h1> {{attacker}} </h1>
+
+    </div>
+  </body>
+
+  <div id="chart"></div>
+
+    <script src='app/main.js'></script>
+    <!-- // <script src='server/firebase.js'></script> -->
+
+
+</html>
+
