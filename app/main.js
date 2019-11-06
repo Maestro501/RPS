@@ -249,7 +249,7 @@ mainApp.controller('mainController', function($scope){
 
       if( $scope.attacker === "computer's attack!" ){
         $scope.attacker = "YOU LOST!";
-        if( ( stats.computer - stats.player ) > 20 ){
+        if( ( stats.computer - stats.player ) > 5 ){
           $scope.computerPaper = false;
           $scope.computerRock = false;
           $scope.computerScissors = false;
