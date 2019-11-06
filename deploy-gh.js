@@ -4,5 +4,6 @@ const fs = require('fs');
 
 // synchronous because this is a build script and need to know explicitly when it finishes
 
-ghpages.publish(path.join(__dirname), () => {
+ghpages.publish(path.join(__dirname), (z) => {
+  console.log('deployment to gh-pages complete!', z);
 });
